@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import com.abhiuday.tasks.Models.Task;
 import com.abhiuday.tasks.Models.TaskDTO;
 import com.abhiuday.tasks.Models.UpdateCommand;
-import com.abhiuday.tasks.Services.CreateTaskService;
-import com.abhiuday.tasks.Services.DeleteTaskService;
-import com.abhiuday.tasks.Services.GetTasksService;
-import com.abhiuday.tasks.Services.UpdateTaskService;
+import com.abhiuday.tasks.Services.*;
 
 @RestController
 public class TaskController {
@@ -21,15 +18,18 @@ public class TaskController {
     private final DeleteTaskService deleteTaskService;
     private final GetTasksService getTasksService;
     private final UpdateTaskService updateTaskService;
+    private final GetTaskByIDService getTaskByIDService;
 
     public TaskController(CreateTaskService createTaskService,
                             DeleteTaskService deleteTaskService,
                             GetTasksService getTasksService,
-                            UpdateTaskService updateTaskService){
+                            UpdateTaskService updateTaskService,
+                            GetTaskByIDService getTaskByIDService){
         
         this.createTaskService = createTaskService;
         this.deleteTaskService = deleteTaskService;
         this.getTasksService = getTasksService;
+        this.getTaskByIDService = getTaskByIDService;
         this.updateTaskService = updateTaskService;
     
     }
@@ -42,6 +42,11 @@ public class TaskController {
     @GetMapping
     public ResponseEntity<List<Task>> GetTask(){
         return getTasksService.execute(null);
+    }
+
+    @GetMapping("/tasks/{id}")
+    public ResponseEntity<TaskDTO> GetTaskByID(@PathVariable Integer id){
+        return getTaskByIDService.execute(id);
     }
 
     @PutMapping("/tasks/{id}")
