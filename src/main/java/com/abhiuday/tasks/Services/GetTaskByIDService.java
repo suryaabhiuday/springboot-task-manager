@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.abhiuday.tasks.Exceptions.TaskNotFoundException;
 import com.abhiuday.tasks.Interfaces.Command;
 import com.abhiuday.tasks.Models.Task;
 import com.abhiuday.tasks.Models.TaskDTO;
@@ -28,6 +29,6 @@ public class GetTaskByIDService implements Command<Integer, TaskDTO> {
             return ResponseEntity.ok(new TaskDTO(task));
         }
         
-        return null;
+        throw new TaskNotFoundException();
     }
 }

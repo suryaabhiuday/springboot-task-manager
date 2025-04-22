@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.abhiuday.tasks.Exceptions.TaskNotFoundException;
 import com.abhiuday.tasks.Interfaces.Command;
 import com.abhiuday.tasks.Models.Task;
 import com.abhiuday.tasks.Models.TaskDTO;
@@ -28,6 +30,7 @@ public class UpdateTaskService implements Command<UpdateCommand, TaskDTO>{
             tasksRepository.save(task);
             return ResponseEntity.ok(new TaskDTO(task));
         }
-        return ResponseEntity.ok(null);
+
+        throw new TaskNotFoundException();
     }
 }

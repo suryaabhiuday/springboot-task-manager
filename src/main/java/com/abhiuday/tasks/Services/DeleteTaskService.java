@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.abhiuday.tasks.Exceptions.TaskNotFoundException;
 import com.abhiuday.tasks.Interfaces.Command;
 import com.abhiuday.tasks.Models.Task;
 import com.abhiuday.tasks.Repository.TasksRepository;
@@ -25,6 +26,6 @@ public class DeleteTaskService implements Command<Integer, Void>{
             tasksRepository.deleteById(input);
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.noContent().build();
+        throw new TaskNotFoundException();
     }
 }
