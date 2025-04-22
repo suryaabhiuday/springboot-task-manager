@@ -16,9 +16,11 @@ public class Task {
     @Column(name = "id")
     private Integer id;
 
+    // @NotNull(message = "title cannot be null")
     @Column(name = "title")
     private String title;
 
+    // @Size(min = 20, message = "the size of description must be more than 20 and less than 100 characters long", max = 100)
     @Column(name = "description")
     private String description;
 

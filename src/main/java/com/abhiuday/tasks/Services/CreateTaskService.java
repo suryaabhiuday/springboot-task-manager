@@ -8,6 +8,7 @@ import com.abhiuday.tasks.Interfaces.Command;
 import com.abhiuday.tasks.Models.Task;
 import com.abhiuday.tasks.Models.TaskDTO;
 import com.abhiuday.tasks.Repository.TasksRepository;
+import com.abhiuday.tasks.Validators.TaskValidator;
 
 @Service
 public class CreateTaskService implements Command<Task, TaskDTO>{
@@ -20,6 +21,7 @@ public class CreateTaskService implements Command<Task, TaskDTO>{
 
     @Override
     public ResponseEntity<TaskDTO> execute(Task input){
+        TaskValidator.validate(input);
         Task newTask = tasksRepository.save(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(new TaskDTO(newTask));
     } 
