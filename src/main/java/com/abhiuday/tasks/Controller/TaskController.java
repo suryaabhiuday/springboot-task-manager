@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 
 import com.abhiuday.tasks.Models.Task;
@@ -19,19 +20,21 @@ public class TaskController {
     private final GetTasksService getTasksService;
     private final UpdateTaskService updateTaskService;
     private final GetTaskByIDService getTaskByIDService;
+    private final SearchTaskService searchTaskService;
 
     public TaskController(CreateTaskService createTaskService,
                             DeleteTaskService deleteTaskService,
                             GetTasksService getTasksService,
                             UpdateTaskService updateTaskService,
-                            GetTaskByIDService getTaskByIDService){
+                            GetTaskByIDService getTaskByIDService,
+                            SearchTaskService searchTaskService){
         
         this.createTaskService = createTaskService;
         this.deleteTaskService = deleteTaskService;
         this.getTasksService = getTasksService;
         this.getTaskByIDService = getTaskByIDService;
         this.updateTaskService = updateTaskService;
-    
+        this.searchTaskService = searchTaskService;
     }
     
     @PostMapping
@@ -57,5 +60,11 @@ public class TaskController {
     @DeleteMapping("/tasks/{id}")
     public ResponseEntity<Void> DeleteTask(@PathVariable Integer id){
         return deleteTaskService.execute(id);
+    }
+
+    @Query
+    @GetMapping("/tasks/search")
+    public ResponseEntity<List<TaskDTO>> SearchTaskByName(@RequestParam String title){
+        return searchTaskService.execute(title);
     }
 }
