@@ -12,6 +12,4 @@ public interface TasksRepository extends JpaRepository<Task, Integer>{
 
     public List<Task> findByTitleContaining(String title);
 
-    public List<Task> findByTitleOrDescriptionContaining(String titleOrDescription);
-    
 }
